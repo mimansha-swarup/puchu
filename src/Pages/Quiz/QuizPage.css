@@ -1,0 +1,29 @@
+
+.max-width{
+  width: 100%;
+}
+.quiz-container{
+  display: flex;
+  flex-direction: column;
+  width:65%;
+  padding: 1rem;
+  margin:  auto;
+  height: fit-content;
+
+}
+.display-none{
+  display: none;
+}
+.quiz-container .btn.large{
+  padding: 1rem;
+}
+
+.md-icons{
+  font-size: 2.5rem;
+}
+.md-icons1{
+  font-size: 1.5rem;
+}
+.ml-auto{
+  margin-left: auto;
+}
