@@ -1,0 +1,15 @@
+.rule-card.card{
+  border-radius: .25rem;
+  padding: 2rem 1rem;
+  width: 80%;
+  margin:auto;
+  background-color: var(--color-black--01);
+}
+.rule-card .card-body{
+  display: flex;
+  flex-direction: column;
+  gap:1rem
+}
+.mr-auto{
+  margin-right: auto;
+}
