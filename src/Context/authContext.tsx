@@ -1,6 +1,13 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext,  useReducer } from "react";
 import { authReducer } from "../Reducer/authReducer";
-
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+  signOut,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 import {
   AuthReducerActionType,
   ReactChildrenType,
@@ -8,15 +15,8 @@ import {
   AuthStateType,
   authActionType,
 } from "../Types";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signInWithEmailAndPassword,
-  signOut,
-  
-} from "firebase/auth";
 import { auth } from "../firebase.config";
-import { createUser } from '../Utils/Auth/CreateUserFunc';
+import { createUser } from "../Utils/Auth/CreateUserFunc";
 
 export const AuthContext = createContext({} as AuthContextType);
 
@@ -39,11 +39,14 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
     (state: AuthStateType, action: authActionType) => AuthStateType
   >(authReducer, initialAuthState);
 
- 
-
-  const SignInUser =  (fName: string, email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
+  const SignInUser = (fName: string, email: string, password: string) => {
+    setPersistence(auth, browserLocalPersistence).then(async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         const user = userCredential.user;
         console.log(user);
         updateProfile(user, {
@@ -53,7 +56,7 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
         });
         //todo: remove console
         console.log(user);
-        await createUser(user)
+        await createUser(user);
         authDispatch({
           type: AuthReducerActionType.LOG_IN,
           payload: {
@@ -67,28 +70,38 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
             },
           },
         });
-        
-      })
-      .catch((error) => console.error(error.code, error.message));
+      } catch (err) {
+        console.error(err);
+      }
+    });
   };
   const LogInUser = (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        authDispatch({
-          type: AuthReducerActionType.LOG_IN,
-          payload: {
-            token: user.uid,
-            isAuth: true,
-            profile: {
-              name: user.displayName,
-              email: email,
+    setPersistence(auth, browserLocalPersistence)
+      .then(async () => {
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+          console.log(user);
+          authDispatch({
+            type: AuthReducerActionType.LOG_IN,
+            payload: {
+              token: user.uid,
+              isAuth: true,
+              profile: {
+                name: user.displayName,
+                email: email,
 
-              displayPicture: user.photoURL,
+                displayPicture: user.photoURL,
+              },
             },
-          },
-        });
+          });
+        } catch (error) {
+          return console.error(error);
+        }
       })
       .catch((error) => console.error(error.code, error.message));
   };
