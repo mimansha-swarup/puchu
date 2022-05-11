@@ -1,2 +1,4 @@
-import { authReducer } from "../Reducer/authReducer";
+import { createUser } from './Auth/CreateUserFunc';
 
+
+export{createUser}

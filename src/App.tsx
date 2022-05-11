@@ -2,10 +2,8 @@ import React from "react";
 import "./App.css";
 import { Navbar, SideBar } from "./Components";
 import { AllRoutes } from "./Routes/AllRoutes";
-import { useAuth } from './Context/authContext';
 
 function App()  {
-  console.log(useAuth())
   return (
     <div className="App">
       <Navbar />
