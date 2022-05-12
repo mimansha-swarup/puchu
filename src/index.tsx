@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./Context";
 
 
 const root = ReactDOM.createRoot(
@@ -13,8 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-     
+    <AuthProvider>     
         <App />
+    </AuthProvider>
    
     </BrowserRouter>
   </React.StrictMode>
