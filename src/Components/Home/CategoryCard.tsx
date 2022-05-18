@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import { DocumentData } from 'firebase/firestore';
+interface CategoryProps {
+  data: DocumentData,
+}
+export const CategoryCard:React.FC<CategoryProps> = ({data}) => {
 
-export const CategoryCard: React.FC = () => {
   return (
-    <Link to="/category" className="text-white-04">
+    <Link to={`/category/${data?.name}`} className="text-white-04">
       <div className="flex flex-column">
         <img
           className="avatar-lg avatar-round"
-          src="https://wallpapercave.com/wp/LdDnYdd.jpg"
+          src={data?.coverImage}
           alt="pokemon"
         />
 
-        <p className="subtitle1 text-center ">Pokemon</p>
+        <p className="subtitle1 text-center ">{data?.name}</p>
       </div>
     </Link>
   );

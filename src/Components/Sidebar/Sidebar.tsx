@@ -24,7 +24,7 @@ export const SideBar:React.FC = () => {
       <hr className="line-horz" />
 
       <NavLink
-        to="/category"
+        to="/category/Pokemon"
         style={( { isActive }:{isActive:boolean}) =>isActive? activeStyle : {}}
         className="sidebar-title "
         >
@@ -34,7 +34,7 @@ export const SideBar:React.FC = () => {
       </NavLink>
       <NavLink
 
-        to="/batman"
+        to="/category/Batman"
         style={( { isActive }:{isActive:boolean}) =>isActive? activeStyle : {}}
         className="sidebar-title "
       >
