@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { ReactChildrenType } from "../Types/common";
-import { getDocs, collection, DocumentData } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 import { db } from "../firebase.config";
 import { categoryContextType } from "../Types";
 import { categoryReducer } from "../Reducer/categoryReducer";

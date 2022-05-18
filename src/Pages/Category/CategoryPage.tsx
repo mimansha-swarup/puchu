@@ -3,12 +3,7 @@ import { useParams } from "react-router-dom";
 import { QuizCard } from "../../Components";
 import { useCategory } from "../../Context/categoryContext";
 import { useState, useEffect } from "react";
-import {
-  DocumentData,
-  getDoc,
-  doc,
-  DocumentSnapshot,
-} from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 export const CategoryPage: React.FC = () => {
@@ -36,8 +31,8 @@ export const CategoryPage: React.FC = () => {
       });
     })();
   }, [categoryName, categories]);
-  console.log(quizzesList)
-  console.log("quizzesList")
+  console.log(quizzesList);
+  console.log("quizzesList");
 
   return (
     <div className="content">
