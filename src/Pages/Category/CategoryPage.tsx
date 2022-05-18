@@ -31,8 +31,7 @@ export const CategoryPage: React.FC = () => {
       });
     })();
   }, [categoryName, categories]);
-  console.log(quizzesList);
-  console.log("quizzesList");
+
 
   return (
     <div className="content">

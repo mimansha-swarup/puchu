@@ -5,7 +5,7 @@ interface CategoryProps {
   data: DocumentData,
 }
 export const CategoryCard:React.FC<CategoryProps> = ({data}) => {
-  // const {name,coverImage} = data
+
   return (
     <Link to={`/category/${data?.name}`} className="text-white-04">
       <div className="flex flex-column">
