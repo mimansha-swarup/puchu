@@ -5,9 +5,9 @@ import {
   LoginPage,
   QuizPage,
   RulePage,
+  SignupPage,
 } from "../Pages";
 import { Navigate, Route, Routes } from "react-router-dom";
-import SignupPage from "../Pages/SignIn/SignInPage";
 import { useAuth } from "../Context";
 import { RequiresAuth } from "./RequireAuth";
 
@@ -19,7 +19,7 @@ export const AllRoutes: React.FC = () => {
       <Route element={<RequiresAuth />}>
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/rule" element={<RulePage />} />
-        <Route path="/category" element={<CategoryPage />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
       </Route>
       {authState?.isAuth ? (
         <>

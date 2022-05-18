@@ -1,2 +1,3 @@
 import { AuthProvider,useAuth } from './authContext';
-export{AuthProvider,useAuth}
+import { CategoryProvider, useCategory } from './categoryContext';
+export{AuthProvider,useAuth,CategoryProvider,useCategory}
