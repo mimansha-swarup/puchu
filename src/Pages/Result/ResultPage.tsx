@@ -1,15 +1,20 @@
-import { useQuestions } from "../../Context";
-import { useEffect } from 'react';
+import { useAuth, useQuestions } from "../../Context";
+import { useEffect, useState } from "react";
+import { updateProfile } from "firebase/auth";
+import { updateUserDb } from "../../Utils";
 
 export const ResultPage = () => {
-  const { questionState,questionDispatch } = useQuestions();
+  const { questionState, questionDispatch } = useQuestions();
+  const { user } = useAuth();
 
   const localQuestion = questionState?.questions.slice(
     0,
     questionState?.questions.length
   );
 
-  useEffect(()=>{
+  const [updateScore, setUpdateScore] = useState(false);
+
+  useEffect(() => {
     localQuestion.forEach((question, index) => {
       if (question["correctAnswer"] === questionState?.userSelection[index]) {
         questionDispatch({
@@ -18,7 +23,18 @@ export const ResultPage = () => {
         });
       }
     });
-  },[])
+    setUpdateScore(true);
+  }, []);
+  useEffect(() => {
+    if (updateScore) {
+      if (user)
+        updateUserDb(user, {
+          score: questionState?.score,
+        });
+      console.log("questionState?.score", questionState?.score, user);
+    }
+  }, [updateScore]);
+
   return (
     <div className="content">
       <h2 className="headline2 text-center mt-2 mb-2">Result</h2>
@@ -58,8 +74,9 @@ export const ResultPage = () => {
         })}
       </div>
       <div className="flex">
-
-      <button className="btn btn-contained  mt-1  mb-3 mx-auto  purple">Take Another Quiz</button>
+        <button className="btn btn-contained  mt-1  mb-3 mx-auto  purple">
+          Take Another Quiz
+        </button>
       </div>
     </div>
   );

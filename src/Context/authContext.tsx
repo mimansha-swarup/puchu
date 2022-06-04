@@ -89,7 +89,8 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
             password
           );
           const user = userCredential.user;
-          console.log(user);
+          setCurrUser(user);
+         
           authDispatch({
             type: AuthReducerActionType.LOG_IN,
             payload: {
@@ -137,7 +138,7 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
         SignInUser,
         LogInUser,
         LogOutUser,
-        user: currUser,
+        user:  currUser ,
       }}
     >
       {children}
