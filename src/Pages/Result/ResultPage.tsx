@@ -1,7 +1,8 @@
 import { useAuth, useQuestions } from "../../Context";
 import { useEffect, useState } from "react";
-import { updateProfile } from "firebase/auth";
 import { updateUserDb } from "../../Utils";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase.config";
 
 export const ResultPage = () => {
   const { questionState, questionDispatch } = useQuestions();
@@ -26,13 +27,19 @@ export const ResultPage = () => {
     setUpdateScore(true);
   }, []);
   useEffect(() => {
-    if (updateScore) {
-      if (user)
-        updateUserDb(user, {
-          score: questionState?.score,
-        });
-      console.log("questionState?.score", questionState?.score, user);
-    }
+    (async () => {
+      if (updateScore) {
+        if (user) {
+          let currentUserRef = doc(db, `User/${user.uid}`);
+          const userSnapData = await (await getDoc(currentUserRef)).data();
+
+          if (userSnapData?.score < questionState?.score)
+            updateUserDb(user, {
+              score: questionState?.score,
+            });
+        }
+      }
+    })();
   }, [updateScore]);
 
   return (
