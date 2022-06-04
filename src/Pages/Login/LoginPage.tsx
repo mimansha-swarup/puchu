@@ -23,6 +23,10 @@ const LoginPage = () => {
 
     LogInUser(emailDetails, passwordDetails);
   };
+  const handleDefaultLogin = () => {
+
+    LogInUser("test@test.com", "test123");
+  };
   return (
     <main className="content">
       <div className="authentication-body flex center">
@@ -72,7 +76,11 @@ const LoginPage = () => {
                 Forgot Your Password?
               </Link>
             </div>
+            
 
+            <button  onClick={handleDefaultLogin} className="btn btn-text">
+              Log In with Test Credential
+            </button>
             <button type="submit" className="btn btn-contained">
               LOG IN
             </button>
