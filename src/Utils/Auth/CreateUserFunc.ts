@@ -11,6 +11,7 @@ export const createUser = async (user: User) => {
         email: user.email,
         name: user.displayName,
         displayPicture: user.photoURL,
+        score:0
       });
     }
   } catch (err) {

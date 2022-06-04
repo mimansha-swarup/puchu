@@ -1,4 +1,4 @@
-import { createContext, useContext,  useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { authReducer } from "../Reducer/authReducer";
 import {
   createUserWithEmailAndPassword,
@@ -7,6 +7,7 @@ import {
   signOut,
   setPersistence,
   browserLocalPersistence,
+  User,
 } from "firebase/auth";
 import {
   AuthReducerActionType,
@@ -39,6 +40,8 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
     (state: AuthStateType, action: authActionType) => AuthStateType
   >(authReducer, initialAuthState);
 
+  const [currUser, setCurrUser] = useState<User>();
+
   const SignInUser = (fName: string, email: string, password: string) => {
     setPersistence(auth, browserLocalPersistence).then(async () => {
       try {
@@ -48,14 +51,15 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
           password
         );
         const user = userCredential.user;
-        console.log(user);
+        setCurrUser(user);
+
         updateProfile(user, {
           displayName: fName,
           photoURL:
             "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9uq273syuaptj6gsjpec.jpg",
         });
         //todo: remove console
-        console.log(user);
+
         await createUser(user);
         authDispatch({
           type: AuthReducerActionType.LOG_IN,
@@ -127,7 +131,14 @@ export const AuthProvider = ({ children }: ReactChildrenType) => {
 
   return (
     <AuthContext.Provider
-      value={{ authState, authDispatch, SignInUser, LogInUser, LogOutUser }}
+      value={{
+        authState,
+        authDispatch,
+        SignInUser,
+        LogInUser,
+        LogOutUser,
+        user: currUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
