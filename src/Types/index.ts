@@ -2,13 +2,17 @@ import { LoginCredentialType, SigninCredentialType, AuthStateType, AuthContextTy
 import { ReactChildrenType } from './common';
 import { AuthReducerActionType } from './Auth/AuthReducer';
 import { categoryStateType,categoryActionType,categoryContextType } from './CategoryType';
+import { questionActionType, questionContextType, questionStateType } from './questionType';
 export type {
   AuthStateType,
   authActionType,
   AuthContextType,
+  questionStateType,
   categoryStateType,
   ReactChildrenType,
+  questionActionType,
   categoryActionType,
+  questionContextType,
   categoryContextType,
   LoginCredentialType,
   SigninCredentialType,

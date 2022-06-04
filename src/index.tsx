@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider, CategoryProvider } from "./Context";
+import { AuthProvider, CategoryProvider, QuestionProvider } from "./Context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,7 +15,9 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <CategoryProvider>
+          <QuestionProvider>
           <App />
+          </QuestionProvider>
         </CategoryProvider>
       </AuthProvider>
     </BrowserRouter>

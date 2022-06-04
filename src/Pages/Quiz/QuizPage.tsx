@@ -1,49 +1,69 @@
 import "./QuizPage.css";
-import { MdNavigateNext, MdNavigateBefore, MdTimer } from "react-icons/md";
-import React from "react";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import React, { useState } from "react";
+import { useQuestions } from "../../Context/questionContext";
+import { QuizQuestionCard } from "../../Components";
+import { useNavigate } from "react-router-dom";
+
 
 export const QuizPage: React.FC = () => {
+  const { questionDispatch, questionState } = useQuestions();
+
+  const localQuestion = questionState?.questions.slice(
+    0,
+    questionState?.questions.length
+  ); //making pure array
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [choice, setChoice] = useState("");
+
+  const navigate = useNavigate();
+
+
+
+  const handleUserChoice = () => {
+    questionDispatch({
+      type: "UPDATE_USERCHOICE",
+      payload: { ...questionState?.userSelection, [currentQuestion]: choice },
+    });
+    setChoice("");
+    if (currentQuestion < 4) {
+      setCurrentQuestion((prev) => prev + 1);
+    }
+  };
+  const navigateBack = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    }
+  };
+
+  const finishGame = () => {
+    handleUserChoice();
+   
+    navigate("/result");
+  };
+
   return (
     <div className="content quiz-container">
-      <h3 className="headline3 text-center mt-1 mb-2">
-        Diddle diddle diddle, time for a riddle.{" "}
-      </h3>
+      {
+        <QuizQuestionCard
+          choice={choice}
+          setChoice={setChoice}
+          questionObj={localQuestion[currentQuestion]}
+          questionNumber={currentQuestion + 1}
+          finishGame={finishGame}
+        />
+      }
 
-      <div className="flex space-between align-center mb-1 ">
-        <button className="btn btn-text text-on-button red">Quit</button>
-        <div className="ml-auto mb-1 flex align-center">
-          <MdTimer className="md-icons1" />
-          <span className="subtitle2 alignself-center ml-1">{"00:00"}</span>
-        </div>
-      </div>
-      <div className="flex space-between  mb-1">
-        <span className="subtitle-2 ">
-          <span className="text-black-01">Question:</span>1/5
-        </span>
-        <span className="subtitle-2 ">
-          <span className="text-black-01">Score:</span>0
-        </span>
-      </div>
-      <p className="body1 text-center mb-2">What is name of Batman's son ?</p>
-      <div className="flex flex-column">
-        {[...Array(4)].map((el,i) => (
-          <>
-            <input
-              type="radio"
-              id={`${i}`}
-              name="options"
-              value={"Dick Grayson"}
-              className="display-none"
-            />
-            <label htmlFor={`${i}`} className="btn large mb-1">
-              Dick Grayson
-            </label>
-          </>
-        ))}
-      </div>
       <div className="flex space-between max-width mt-1">
-        <MdNavigateBefore className="md-icons" />
-        <MdNavigateNext className="md-icons" />
+        <MdNavigateBefore className="md-icons" onClick={navigateBack} />
+        {currentQuestion === 4 ? (
+          <button className="btn btn-contained" onClick={finishGame}>
+            Finish
+          </button>
+        ) : (
+          <MdNavigateNext className="md-icons" onClick={handleUserChoice} />
+        )}
       </div>
     </div>
   );

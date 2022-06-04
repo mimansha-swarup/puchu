@@ -1,16 +1,17 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { QuizCard } from "../../Components";
-import { useCategory } from "../../Context/categoryContext";
 import { useState, useEffect } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import { useQuestions, useCategory } from "../../Context";
 
 export const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
 
   const [quizzesList, setQuizzesList] = useState<any[]>([]);
   const { categoryState, categoryDispatch } = useCategory();
+  const { questionDispatch } = useQuestions();
   const { categories, quizzes } = categoryState;
   const currCategory = categories[categoryName as keyof typeof categories];
 
@@ -30,15 +31,31 @@ export const CategoryPage: React.FC = () => {
         }
       });
     })();
-  }, [categoryName, categories]);
-
+  }, [
+    categoryName,
+    categories,
+    currCategory?.quizzes,
+    quizzes,
+    categoryDispatch,
+  ]);
 
   return (
     <div className="content">
       <h2 className="headline2 text-center mt-2 mb-3">{currCategory?.name}</h2>
       <div className="flex flex-wrap mt-3 gap-3 justify-center">
         {quizzesList.map((quiz) => (
-          <QuizCard key={quiz.quizName} data={quiz} />
+          <Link
+            to="/rule"
+            key={quiz.quizName}
+            onClick={() =>
+              questionDispatch({
+                type: "SET_QUESTIONS",
+                payload: quiz?.questions,
+              })
+            }
+          >
+            <QuizCard data={quiz} />
+          </Link>
         ))}
       </div>
     </div>

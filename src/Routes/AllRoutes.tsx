@@ -4,6 +4,7 @@ import {
   HomePage,
   LoginPage,
   QuizPage,
+  ResultPage,
   RulePage,
   SignupPage,
 } from "../Pages";
@@ -20,6 +21,7 @@ export const AllRoutes: React.FC = () => {
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/rule" element={<RulePage />} />
         <Route path="/category/:categoryName" element={<CategoryPage />} />
+        <Route path="/result" element={<ResultPage />} />
       </Route>
       {authState?.isAuth ? (
         <>

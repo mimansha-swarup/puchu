@@ -1,8 +1,10 @@
 import "./Rule.css";
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useQuestions } from '../../Context';
 
 export const RuleBoard:React.FC = () => {
+  const {questionDispatch} = useQuestions()
   return (
     <div className="card  shadow rule-card">
       <div className="card-body">
@@ -40,7 +42,7 @@ export const RuleBoard:React.FC = () => {
       </div>
       <div className="card-action ">
         <button className="btn btn-text red mr-auto">Quit</button>
-        <Link to="/quiz">
+        <Link to="/quiz"  onClick={()=>questionDispatch({ type: "RESET", payload: {} })} >
         <button className="btn btn-outline ">Continue</button>
         </Link>
       </div>
