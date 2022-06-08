@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { updateUserDb } from "../../Utils";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import { Link } from "react-router-dom";
 
 export const ResultPage = () => {
   const { questionState, questionDispatch } = useQuestions();
@@ -81,9 +82,11 @@ export const ResultPage = () => {
         })}
       </div>
       <div className="flex">
-        <button className="btn btn-contained  mt-1  mb-3 mx-auto  purple">
-          Take Another Quiz
-        </button>
+        <Link to="/" className="  mt-1  mb-3 mx-auto ">
+          <button className="btn btn-contained   purple">
+            Take Another Quiz
+          </button>
+        </Link>
       </div>
     </div>
   );
