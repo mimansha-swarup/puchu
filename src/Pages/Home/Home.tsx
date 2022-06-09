@@ -7,7 +7,7 @@ import { useCategory } from "../../Context/categoryContext";
 export const HomePage: React.FC = () => {
   const { categoryState} = useCategory();
   const {categories} = categoryState
-  console.log(categoryState.categories)
+
   return (
     <div className="content mt-2">
       <h1 className="headline1 text-center mt-3 mb-3 semibold text-yellow-00">

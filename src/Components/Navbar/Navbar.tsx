@@ -6,7 +6,7 @@ import React from "react";
 import { useAuth } from "../../Context";
 
 export const Navbar: React.FC = () => {
-  const { authState } = useAuth();
+  const { authState, LogOutUser } = useAuth();
   const { isAuth } = authState;
   return (
     <header className="navbar">
@@ -16,12 +16,6 @@ export const Navbar: React.FC = () => {
           name="search-box"
           id="search"
           placeholder="search"
-          //  onChange={(event) =>
-          //   filterDispatch({
-          //     type: filterActions.SET_SEARCH_QUERY,
-          //     payload: event.target.value,
-          //   })
-          // }
         />
         <BsSearch className="nav-icons" />
       </div>
@@ -30,7 +24,7 @@ export const Navbar: React.FC = () => {
           <div className="flex">
             
             <img className="avatar-sm avatar-round" src={authState?.profile?.displayPicture} alt="user" />
-            <button className="btn btn-outline yellow ml-2 semibold">
+            <button onClick={LogOutUser} className="btn btn-outline yellow ml-2 semibold">
               Log out
             </button>
           </div>

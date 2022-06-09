@@ -1,3 +1,4 @@
+import { User } from "firebase/auth";
 import React from "react";
 
 export type AuthStateType = {
@@ -16,6 +17,7 @@ export type AuthContextType = {
   SignInUser: (fName: string, email: string, password: string) => void;
   LogInUser: (email: string, password: string) => void;
   LogOutUser: () => void;
+  user: User | undefined;
 };
 export type authActionType = {
   type: string;

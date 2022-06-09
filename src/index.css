@@ -7,3 +7,16 @@ body {
   color: var(--color-white-00);
   overflow: hidden;
 }
+.alignItem-Stretch{
+  align-items: stretch;
+}
+.result-container{
+  margin: 1rem auto 1rem auto;
+  width: 80%;
+}
+.mx-auto{
+  /* margin: 0 auto 0 auto */
+  margin-left: auto;
+  margin-right: auto;
+
+}

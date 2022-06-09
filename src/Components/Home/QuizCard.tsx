@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { DocumentData } from 'firebase/firestore';
+import { useQuestions } from "../../Context";
 
 interface QuizCardProps {
   data: DocumentData |undefined,
@@ -8,8 +9,10 @@ interface QuizCardProps {
 
 export const QuizCard: React.FC<QuizCardProps> = ({data}) => {
 
+  const {questionDispatch} = useQuestions()
+  const currQuestion =()=> questionDispatch({type:"SET_QUESTIONS",payload:{questions:data?.questions,score:0}})
   return (
-    <Link to={"/rule"}>
+    <Link to={"/rule"} onClick={currQuestion}>
     <div className="card">
       <div className="media-cont">
         <img
